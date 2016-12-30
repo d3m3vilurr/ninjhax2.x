@@ -14,7 +14,10 @@ def outputConstantsH(d):
 def outputConstantsS(d):
 	out=""
 	for k in d:
-		out+=(k[0]+" equ ("+str(k[1])+")")+"\n"
+		if k[1] == None:
+		    out+=".definelabel NO_"+k[0]+",0\n"
+		else:
+		    out+=(k[0]+" equ ("+str(k[1])+")")+"\n"
 	return out
 
 def outputConstantsPY(d):

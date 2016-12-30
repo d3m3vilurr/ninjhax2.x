@@ -37,8 +37,13 @@ MENU_SLEEP equ ROP_MENU_SLEEPTHREAD
 		; loop until keycombo pressed
 		rop_MENU_loop:
 			; load current PAD value
+.ifndef NO_ROP_MENU_POP_R0PC
 			.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 				.word MENU_PAD ; r0 (PAD)
+.else
+		.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+				.word MENU_PAD ; r0 (PAD)
+.endif
 			.word ROP_MENU_LDR_R0R0_POP_R4PC ; ldr r0, [r0] ; pop {r4, pc}
 				.word MENU_KEYCOMBO ; r4 (keycombo)
 			; mask it with desired key combo
@@ -69,8 +74,13 @@ MENU_SLEEP equ ROP_MENU_SLEEPTHREAD
 			.word ROP_MENU_STACK_PIVOT
 
 		; NSS:Reboot
+.ifndef NO_ROP_MENU_POP_R0PC
 			.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 				.word 0x00000001 ; r0 (flag)
+.else
+			.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+				.word 0x00000001 ; r0 (flag)
+.endif
 			.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 				.word nssRebootData + MENU_OBJECT_LOC - object ; r1 (PID followed by mediatype and reserved)
 			.word ROP_MENU_POP_R2R3R4R5R6PC ; pop {r2, r3, r4, r5, r6, pc}
@@ -85,8 +95,13 @@ MENU_SLEEP equ ROP_MENU_SLEEPTHREAD
 				.word 0xDEADBABE ; (garbage)
 				.word 0xDEADBABE ; r4 (garbage)
 				.word 0xDEADBABE ; r5 (garbage)
+.ifndef NO_ROP_MENU_POP_R0PC
 			.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 				.word 0xFFFFFFFF ; r0
+.else
+			.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+				.word 0xFFFFFFFF ; r0
+.endif
 			.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 				.word 0x0FFFFFFF ; r1
 			.word MENU_SLEEP

@@ -24,10 +24,10 @@ endif
 
 SCRIPTS = "../scripts"
 
-all: menu_payload_regionfree.bin menu_payload_loadropbin.bin $(ROPBIN_CMD)
+all: menu_payload_loadropbin.bin $(ROPBIN_CMD)
 
 clean:
-	@rm -f menu_payload_regionfree.bin menu_payload_loadropbin.bin menu_ropbin.bin
+	@rm -f menu_payload_loadropbin.bin menu_ropbin.bin
 	@echo "all cleaned up !"
 
 %.bin: %.s

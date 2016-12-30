@@ -35,7 +35,7 @@ ifneq ($(strip $(LOADROPBIN)),)
 	ROPBIN_CMD1	:=	@cp menu_payload/menu_ropbin.bin build/
 endif
 
-ROPDB_VERSIONS = 11272 12288 13330 14336 15360 16404 17415 19456 20480 21504 22528 23554 24576 25600 20480_usa 21504_usa 22528_usa 23552_usa 24578_usa 25600_usa 26624_usa 6166_kor 7175_kor 8192_kor 9216_kor 10240_kor 11266_kor 12288_kor 13312_kor
+ROPDB_VERSIONS = 11272 12288 13330 14336 15360 16404 17415 19456 20480 21504 22528 23554 24576 25600 20480_usa 21504_usa 22528_usa 23552_usa 24578_usa 25600_usa 26624_usa 5122_kor 6166_kor 7175_kor 8192_kor 9216_kor 10240_kor 11266_kor 12288_kor 13312_kor
 ROPDB_TARGETS = $(addsuffix _ropdb.txt, $(addprefix menu_ropdb/, $(ROPDB_VERSIONS)))
 
 OUTNAME = $(FIRMVERSION)_$(REGION)_$(MENUVERSION)_$(MSETVERSION)
@@ -53,7 +53,7 @@ endif
 
 SCRIPTS = "scripts"
 
-.PHONY: directories all menu_ropdb build/constants firm_constants/constants.txt cn_constants/constants.txt region_constants/constants.txt menu_ropdb/ropdb.txt cn_qr_initial_loader/cn_qr_initial_loader.bin.png cn_save_initial_loader/cn_save_initial_loader.bin cn_secondary_payload/cn_secondary_payload.bin cn_bootloader/cn_bootloader.bin menu_payload/menu_payload_regionfree.bin menu_payload/menu_payload_loadropbin.bin menu_payload/menu_ropbin.bin
+.PHONY: directories all menu_ropdb build/constants firm_constants/constants.txt cn_constants/constants.txt region_constants/constants.txt menu_ropdb/ropdb.txt cn_qr_initial_loader/cn_qr_initial_loader.bin.png cn_save_initial_loader/cn_save_initial_loader.bin cn_secondary_payload/cn_secondary_payload.bin cn_bootloader/cn_bootloader.bin menu_payload/menu_payload_loadropbin.bin menu_payload/menu_ropbin.bin
 
 all: directories build/constants $(QRCODE_TARGET0) p/$(OUTNAME).bin r/$(OUTNAME).bin $(QRCODE_TARGET1)
 directories:
@@ -129,23 +129,21 @@ build/cn_secondary_payload.bin: cn_secondary_payload/cn_secondary_payload.bin
 	@cp cn_secondary_payload/cn_secondary_payload.bin build/cn_secondary_payload.bin
 	@$(SCRIPTS)/blz.exe -en build/cn_secondary_payload.bin
 	@python $(SCRIPTS)/blowfish.py build/cn_secondary_payload.bin build/cn_secondary_payload.bin scripts
-cn_secondary_payload/cn_secondary_payload.bin: build/cn_save_initial_loader.bin build/menu_payload_regionfree.bin build/menu_payload_loadropbin.bin build/menu_ropbin.bin compress/compress.exe
+cn_secondary_payload/cn_secondary_payload.bin: build/cn_save_initial_loader.bin build/menu_payload_loadropbin.bin build/menu_ropbin.bin compress/compress.exe
 	@mkdir -p cn_secondary_payload/data
 	@rm -rf cn_secondary_payload/data/*
 ifeq ($(strip $(QRINSTALLER)),)
 	@cp build/cn_save_initial_loader.bin cn_secondary_payload/data/
-	@cp build/menu_payload_regionfree.bin cn_secondary_payload/data/
 endif
 	@cp build/menu_payload_loadropbin.bin cn_secondary_payload/data/
 	$(ROPBIN_CMD0)
 	@cd cn_secondary_payload && make
 
 
-build/menu_payload_regionfree.bin build/menu_payload_loadropbin.bin build/menu_ropbin.bin: menu_payload/menu_payload_regionfree.bin menu_payload/menu_payload_loadropbin.bin menu_payload/menu_ropbin.bin
-	@cp menu_payload/menu_payload_regionfree.bin build/
+build/menu_payload_loadropbin.bin build/menu_ropbin.bin: menu_payload/menu_payload_loadropbin.bin menu_payload/menu_ropbin.bin
 	@cp menu_payload/menu_payload_loadropbin.bin build/
 	$(ROPBIN_CMD1)
-menu_payload/menu_payload_regionfree.bin menu_payload/menu_payload_loadropbin.bin menu_payload/menu_ropbin.bin: build/app_code.bin build/app_code_reloc.s build/app_bootloader.bin
+menu_payload/menu_payload_loadropbin.bin menu_payload/menu_ropbin.bin: build/app_code.bin build/app_code_reloc.s build/app_bootloader.bin
 	@cp build/app_bootloader.bin menu_payload/
 	@cp build/app_code.bin menu_payload/
 	@cp build/app_code_reloc.s menu_payload/

@@ -40,6 +40,8 @@ MENU_SHAREDDSPBLOCK_HANDLE equ (MENU_LOADEDROP_BKP_BUFADR + shareddspHandle) ; i
 HB_DSP_SIZE equ ((MENU_DSP_BINARY_SIZE + 0xfff) & 0xfffff000)
 HB_DSP_ADDR equ (HB_MEM0_ADDR - HB_DSP_SIZE)
 
+VIRTUAL_ROP_POP_R0PC equ (MENU_OBJECT_LOC + pop_r0pc - object)
+
 DUMMY_PTR equ (WAITLOOP_DST - 4)
 
 .include "menu_include.s"
@@ -60,8 +62,10 @@ DUMMY_PTR equ (WAITLOOP_DST - 4)
 		; unload dsp stuff
 			dsp_unload_component
 
+.ifndef NO_MENU_PTMSYSM_HANDLE
 		; set n3ds cpu config so we can have same timing everywhere
 			ptm_configure_n3ds_imm 0x00
+.endif
 
 		; same for syscore cpu percent
 			apt_open_session 0, 0
@@ -177,9 +181,13 @@ DUMMY_PTR equ (WAITLOOP_DST - 4)
 
 			wait_for_parameter_and_send MENU_LOADEDROP_BUFADR + fsUserString, MENU_FS_HANDLE
 			wait_for_parameter_and_send MENU_LOADEDROP_BUFADR + nssString, MENU_NSS_HANDLE
+.ifndef NO_MENU_IRRST_HANDLE
 			wait_for_parameter_and_send MENU_LOADEDROP_BUFADR + irrstString, MENU_IRRST_HANDLE
+.endif
 			wait_for_parameter_and_send MENU_LOADEDROP_BUFADR + amsysString, MENU_AMSYS_HANDLE
+.ifndef NO_MENU_PTMSYSM_HANDLE
 			wait_for_parameter_and_send MENU_LOADEDROP_BUFADR + ptmsysmString, MENU_PTMSYSM_HANDLE
+.endif
 			wait_for_parameter_and_send MENU_LOADEDROP_BUFADR + gsplcdString, MENU_GSPLCD_HANDLE
 			wait_for_parameter_and_send MENU_LOADEDROP_BUFADR + nwmextString, MENU_NWMEXT_HANDLE
 			wait_for_parameter_and_send MENU_LOADEDROP_BUFADR + newssString, MENU_NEWSS_HANDLE
@@ -288,8 +296,13 @@ DUMMY_PTR equ (WAITLOOP_DST - 4)
 			.word 0xDEADBABE ; r4 (garbage)
 		.word ROP_MENU_POP_R4PC
 			.word ROP_MENU_POP_R4R5PC ; r4
+.ifndef NO_ROP_MENU_POP_R0PC
 		.word ROP_MENU_POP_R0PC
 			.word MENU_OBJECT_LOC + waitForParameter_loop_pivot - 4
+.else
+		.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+			.word MENU_OBJECT_LOC + waitForParameter_loop_pivot - 4
+.endif
 		.word ROP_MENU_STRNE_R4R0x4_POP_R4PC ; strne r4, [r0, #4] ; pop {r4, pc}
 			.word 0xDEADBABE ; r4 (garbage)
 		apt_close_session 0, 0 ; can't close earlier because need to maintain r0 and flags
@@ -303,16 +316,27 @@ DUMMY_PTR equ (WAITLOOP_DST - 4)
 			.word MENU_OBJECT_LOC + waitForParameter_loop ; sp
 			.word MENU_NOP ; pc
 		apt_open_session 0, 0
+.ifndef NO_ROP_MENU_POP_R0PC
 		.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 			waitForParameter_loop_handle_ptr:
 			.word 0xDEADBABE ; r0
+.else
+		.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+			waitForParameter_loop_handle_ptr:
+			.word 0xDEADBABE ; r0
+.endif
 		.word ROP_MENU_LDR_R0R0_POP_R4PC ; ldr r0, [r0] ; pop {r4, pc}
 			.word MENU_LOADEDROP_BUFADR + waitForParameter_loop_handle_loc ; r4 (destination address)
 		.word ROP_MENU_STR_R0R4_POP_R4PC ; str r0, [r4] ; pop {r4, pc}
 			.word 0xDEADBABE ; r4 (garbage)
 		set_lr ROP_MENU_POP_R4R5PC
+.ifndef NO_ROP_MENU_POP_R0PC
 		.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 			.word 0x101 ; r0 (source app_id)
+.else
+		.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+			.word 0x101 ; r0 (source app_id)
+.endif
 		.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 			.word 0x101 ; r1 (destination app_id)
 		.word ROP_MENU_POP_R2R3R4R5R6PC ; pop {r2, r3, r4, r5, r6, pc}
@@ -508,7 +532,9 @@ DUMMY_PTR equ (WAITLOOP_DST - 4)
 					apt_leave_homemenu 0, WAITLOOP_OFFSET
 					apt_close_session 0, WAITLOOP_OFFSET
 
+.ifndef NO_MENU_PTMSYSM_HANDLE
 					ptm_configure_n3ds MENU_LOADEDROP_BUFADR + waitLoop_n3ds_cpu + WAITLOOP_OFFSET, WAITLOOP_OFFSET
+.endif
 
 					; memcpy wait loop to restore what we just destroyed by calling functions (oops !)
 					; only copy whatever's before the memcpy so we dont overwrite the return address
@@ -535,7 +561,9 @@ DUMMY_PTR equ (WAITLOOP_DST - 4)
 				apt_jump_application
 				apt_close_session 0, WAITLOOP_OFFSET
 
+.ifndef NO_MENU_PTMSYSM_HANDLE
 				ptm_configure_n3ds MENU_LOADEDROP_BUFADR + waitLoop_n3ds_cpu + WAITLOOP_OFFSET, WAITLOOP_OFFSET
+.endif
 
 				; memcpy wait loop to restore what we just destroyed by calling functions (oops !)
 				; only copy whatever's before the memcpy so we dont overwrite the return address
@@ -631,7 +659,6 @@ DUMMY_PTR equ (WAITLOOP_DST - 4)
 			.word 0xef00000a ; svcSleepThread
 			ldr r2, =0xBABE0007
 			blx r2
-			
 		.pool
 
 		; don't actually care if we copy too much...
@@ -645,5 +672,9 @@ DUMMY_PTR equ (WAITLOOP_DST - 4)
 	appBootloader:
 		.incbin "app_bootloader.bin"
 
+    .align 0x20
+    pop_r0pc:
+        .arm
+            pop {r0, pc}
 
 .Close
