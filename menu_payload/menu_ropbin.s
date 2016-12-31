@@ -40,8 +40,6 @@ MENU_SHAREDDSPBLOCK_HANDLE equ (MENU_LOADEDROP_BKP_BUFADR + shareddspHandle) ; i
 HB_DSP_SIZE equ ((MENU_DSP_BINARY_SIZE + 0xfff) & 0xfffff000)
 HB_DSP_ADDR equ (HB_MEM0_ADDR - HB_DSP_SIZE)
 
-VIRTUAL_ROP_POP_R0PC equ (MENU_OBJECT_LOC + pop_r0pc - object)
-
 DUMMY_PTR equ (WAITLOOP_DST - 4)
 
 .include "menu_include.s"
@@ -300,8 +298,12 @@ DUMMY_PTR equ (WAITLOOP_DST - 4)
 		.word ROP_MENU_POP_R0PC
 			.word MENU_OBJECT_LOC + waitForParameter_loop_pivot - 4
 .else
-		.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+		.word ROP_MENU_POP_R1PC
 			.word MENU_OBJECT_LOC + waitForParameter_loop_pivot - 4
+		.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+			.word ROP_MENU_POP_R4R5PC
+			.word 0xDEADBABE
+			.word 0xDEADBABE
 .endif
 		.word ROP_MENU_STRNE_R4R0x4_POP_R4PC ; strne r4, [r0, #4] ; pop {r4, pc}
 			.word 0xDEADBABE ; r4 (garbage)
@@ -321,9 +323,11 @@ DUMMY_PTR equ (WAITLOOP_DST - 4)
 			waitForParameter_loop_handle_ptr:
 			.word 0xDEADBABE ; r0
 .else
-		.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
+        .word ROP_MENU_POP_R0R8R11PC
 			waitForParameter_loop_handle_ptr:
-			.word 0xDEADBABE ; r0
+			.word 0xDEADBABE
+			.word 0xDEADBABE
+			.word 0xDEADBABE
 .endif
 		.word ROP_MENU_LDR_R0R0_POP_R4PC ; ldr r0, [r0] ; pop {r4, pc}
 			.word MENU_LOADEDROP_BUFADR + waitForParameter_loop_handle_loc ; r4 (destination address)
@@ -334,8 +338,12 @@ DUMMY_PTR equ (WAITLOOP_DST - 4)
 		.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 			.word 0x101 ; r0 (source app_id)
 .else
-		.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-			.word 0x101 ; r0 (source app_id)
+		.word ROP_MENU_POP_R1PC
+			.word 0x101
+		.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+			.word 0xDEADBABE
+			.word 0xDEADBABE
+			.word 0xDEADBABE
 .endif
 		.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 			.word 0x101 ; r1 (destination app_id)
@@ -671,10 +679,5 @@ DUMMY_PTR equ (WAITLOOP_DST - 4)
 	.align 0x20
 	appBootloader:
 		.incbin "app_bootloader.bin"
-
-    .align 0x20
-    pop_r0pc:
-        .arm
-            pop {r0, pc}
 
 .Close

