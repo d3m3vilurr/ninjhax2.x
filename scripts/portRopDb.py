@@ -41,7 +41,11 @@ def findPattern(p, t, addr, size):
 def outputConstantsTxt(d):
 	out="[\n"
 	for k in d:
-		out+="(\""+k[0]+"\", \""+str(k[1])+"\"),\n"
+		if k[1]:
+			v = '"%s"' % k[1]
+		else:
+			v = '%s' % k[1]
+		out+="(\""+k[0]+"\", "+v+"),\n"
 	out+="]\n"
 	return out
 
@@ -62,14 +66,20 @@ for entry in l:
 		# gadget search
 		(name, in_addr, in_size) = entry
 		print(name)
-		out_addr = findPattern(proto, target, in_addr - base, in_size) + base
-		out += [(name, hex(out_addr))]
+		out_addr = findPattern(proto, target, in_addr - base, in_size)
+		if out_addr:
+			out += [(name, hex(out_addr + base))]
+		else:
+			out += [(name, None)]
 	if len(entry) == 4:
 		# const ptr search
 		(name, in_addr, in_size, in_offset) = entry
 		print(name)
 		out_addr = findPattern(proto, target, in_addr - base, in_size)
-		out_addr = getWord(target, out_addr + in_offset*4, 4)
-		out += [(name, hex(out_addr))]
+		if out_addr:
+			out_addr = getWord(target, out_addr + in_offset*4, 4)
+			out += [(name, hex(out_addr))]
+		else:
+			out += [(name, None)]
 
 open(sys.argv[-1],"w").write(outputConstantsTxt(out))
