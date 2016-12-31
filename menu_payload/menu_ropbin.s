@@ -323,9 +323,11 @@ DUMMY_PTR equ (WAITLOOP_DST - 4)
 			waitForParameter_loop_handle_ptr:
 			.word 0xDEADBABE ; r0
 .else
-        .word ROP_MENU_POP_R0R8R11PC
+		.word ROP_MENU_POP_R1PC
 			waitForParameter_loop_handle_ptr:
 			.word 0xDEADBABE
+		.word ROP_MENU_MOV_R0R1_POP_R4R5R6PC
+			.word MENU_OBJECT_LOC + waitForParameter_loop_data + 4
 			.word 0xDEADBABE
 			.word 0xDEADBABE
 .endif
