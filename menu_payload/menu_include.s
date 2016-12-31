@@ -1549,6 +1549,7 @@
 	.word ROP_MENU_POP_R1PC
 		.word 0x00000000
 	@@busyloop_start:
+.ifndef NO_ROP_MENU_ADD_R1R1x1_STR_R1R5x10_POP_R4R5R6PC
 	.word ROP_MENU_POP_R4R5PC
 		.word 0xDEADBABE
 		.word DUMMY_PTR - 0x10
@@ -1556,6 +1557,17 @@
 		.word 0xDEADBABE
 		.word DUMMY_PTR - 0x10
 		.word 0xDEADBABE
+.else
+	.word ROP_MENU_POP_R4R5PC
+		.word DUMMY_PTR - 0x54
+		.word 0xDEADBABE
+	.word ROP_MENU_ADD_R1R1x1_STR_R1R4x54_POP_R4R5R6R7R8PC
+		.word DUMMY_PTR - 0x54
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+		.word 0xDEADBABE
+.endif
 .ifndef NO_ROP_MENU_POP_R0PC
 	.word ROP_MENU_POP_R0PC
 		.word total
